@@ -30,5 +30,4 @@ public class Tile extends Rectangle {
         } else
             setFill(Color.valueOf("#708090"));
     }
-
 }

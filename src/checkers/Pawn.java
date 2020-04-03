@@ -28,8 +28,7 @@ public class Pawn extends StackPane {
     public Pawn(PawnType type, int x, int y) {
         this.type = type;
 
-        move(x, y);
-
+        // Make pawn (background and stroke - shadow)
         Ellipse backgroundColor = new Ellipse(TILE_SIZE * 0.3125, TILE_SIZE * 0.26);
         backgroundColor.setFill(Color.BLACK);
 
@@ -55,12 +54,16 @@ public class Pawn extends StackPane {
 
         getChildren().addAll(backgroundColor, topColor);
 
+        //Controlling by mouse
+        move(x, y);
+
         setOnMousePressed(e -> {
             mouseX = e.getSceneX();
             mouseY = e.getSceneY();
         });
 
-        setOnMouseDragged(e -> relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY));
+        setOnMouseDragged(e ->
+                relocate(e.getSceneX() - mouseX + oldX, e.getSceneY() - mouseY + oldY));
     }
 
     public void move(int x, int y) {
