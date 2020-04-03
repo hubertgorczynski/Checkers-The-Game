@@ -20,6 +20,8 @@ public class Checkers extends Application {
     private Group tileGroup = new Group();
     private Group pawnsGroup = new Group();
 
+    private Stage window;
+
     private Parent createContent() {
         Pane pane = new Pane();
         pane.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
@@ -118,12 +120,19 @@ public class Checkers extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        window = primaryStage;
+
         Scene gameScene = new Scene(createContent());
 
-        Image imageback = new Image("file:resources/main_menu.jpg");
+        window.setOnCloseRequest(event -> {
+            event.consume();
+            closeProgram();
+        });
+
+        Image imageBack = new Image("file:resources/main_menu.jpg");
 
         BackgroundSize backgroundSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(imageback, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        BackgroundImage backgroundImage = new BackgroundImage(imageBack, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
 
         GridPane menuLayout = new GridPane();
@@ -134,7 +143,7 @@ public class Checkers extends Application {
         Button startButton = new Button("New game");
         startButton.setPrefSize(180, 80);
         startButton.setStyle("-fx-font-size:20");
-        startButton.setOnAction(event -> primaryStage.setScene(gameScene));
+        startButton.setOnAction(event -> window.setScene(gameScene));
 
         Button loadButton = new Button("Load game");
         loadButton.setPrefSize(180, 80);
@@ -143,6 +152,7 @@ public class Checkers extends Application {
         Button exitButton = new Button("Exit");
         exitButton.setPrefSize(180, 80);
         exitButton.setStyle("-fx-font-size:20");
+        exitButton.setOnAction(event -> closeProgram());
 
         menuLayout.add(startButton, 18, 15);
         menuLayout.add(loadButton, 18, 30);
@@ -150,10 +160,15 @@ public class Checkers extends Application {
 
         Scene mainMenu = new Scene(menuLayout, 1500, 996);
 
-        primaryStage.setScene(mainMenu);
-        primaryStage.setTitle("Checkers");
-        primaryStage.show();
+        window.setScene(mainMenu);
+        window.setTitle("Checkers");
+        window.show();
+    }
 
+    private void closeProgram() {
+        Boolean answer = ConfirmBox.display();
+        if (answer)
+            window.close();
     }
 
     public static void main(String[] args) {
