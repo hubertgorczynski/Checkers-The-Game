@@ -1,6 +1,7 @@
 package checkers;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,7 +24,15 @@ public class Checkers extends Application {
     private Stage window;
 
     private Parent createContent() {
-        Pane pane = new Pane();
+        GridPane pane = new GridPane();
+        pane.setAlignment(Pos.CENTER);
+
+        Image imageBack = new Image("file:resources/sample_background.jpg");
+        BackgroundSize backgroundSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true);
+        BackgroundImage backgroundImage = new BackgroundImage(imageBack, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        Background background = new Background(backgroundImage);
+        pane.setBackground(background);
+
         pane.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
         pane.getChildren().addAll(tileGroup, pawnsGroup);
 
@@ -166,7 +175,7 @@ public class Checkers extends Application {
     }
 
     private void closeProgram() {
-        Boolean answer = ConfirmBox.display();
+        boolean answer = ConfirmBox.display();
         if (answer)
             window.close();
     }

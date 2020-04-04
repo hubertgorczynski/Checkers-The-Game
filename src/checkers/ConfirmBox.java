@@ -37,13 +37,12 @@ public class ConfirmBox {
 
         VBox confirmLayout = new VBox(10);
 
-        Image imageBack = new Image("file:resources/confirm_background.jpg");
-
+        Image confirmBackground = new Image("file:resources/sample_background.jpg");
         BackgroundSize backgroundSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(imageBack, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        BackgroundImage backgroundImage = new BackgroundImage(confirmBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
-
         confirmLayout.setBackground(background);
+
         confirmLayout.getChildren().addAll(label1, yesButton, noButton);
         confirmLayout.setAlignment(Pos.CENTER);
 

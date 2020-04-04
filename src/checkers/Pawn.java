@@ -1,7 +1,11 @@
 package checkers;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 
 import static checkers.Checkers.TILE_SIZE;
@@ -28,6 +32,21 @@ public class Pawn extends StackPane {
     public Pawn(PawnType type, int x, int y) {
         this.type = type;
 
+        /*
+        Circle circle = new Circle (TILE_SIZE * 0.5);
+
+        Image blackPawnGraphic = new Image("black_pawn.png");
+        Image whitePawnGraphic = new Image("white_pawn.png");
+
+        if (type == PawnType.GREY) {
+            circle.setFill(new ImagePattern(blackPawnGraphic));
+        } else if (type == PawnType.WHITE) {
+            circle.setFill(new ImagePattern(whitePawnGraphic));
+        }
+
+        getChildren().add(circle);
+        */
+
         // Make pawn (background and stroke - shadow)
         Ellipse backgroundColor = new Ellipse(TILE_SIZE * 0.3125, TILE_SIZE * 0.26);
         backgroundColor.setFill(Color.BLACK);
@@ -41,7 +60,7 @@ public class Pawn extends StackPane {
         Ellipse topColor = new Ellipse(TILE_SIZE * 0.3125, TILE_SIZE * 0.26);
 
         if (type == PawnType.GREY) {
-            topColor.setFill(Color.valueOf("#808080"));
+          topColor.setFill(Color.valueOf("#808080"));
         } else if (type == PawnType.WHITE) {
             topColor.setFill(Color.valueOf("#F0FFF0"));
         }
