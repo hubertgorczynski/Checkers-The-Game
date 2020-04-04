@@ -130,16 +130,14 @@ public class Checkers extends Application {
     public void start(Stage primaryStage) {
 
         window = primaryStage;
-
-        Scene gameScene = new Scene(createContent());
-
         window.setOnCloseRequest(event -> {
             event.consume();
             closeProgram();
         });
 
-        Image imageBack = new Image("file:resources/main_menu.jpg");
+        Scene gameScene = new Scene(createContent());
 
+        Image imageBack = new Image("file:resources/main_menu.jpg");
         BackgroundSize backgroundSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true);
         BackgroundImage backgroundImage = new BackgroundImage(imageBack, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
@@ -149,25 +147,25 @@ public class Checkers extends Application {
         menuLayout.setVgap(8);
         menuLayout.setBackground(background);
 
+        Scene mainMenu = new Scene(menuLayout, 1200, 720);
+
         Button startButton = new Button("New game");
-        startButton.setPrefSize(180, 80);
+        startButton.setPrefSize(140, 50);
         startButton.setStyle("-fx-font-size:20");
         startButton.setOnAction(event -> window.setScene(gameScene));
 
         Button loadButton = new Button("Load game");
-        loadButton.setPrefSize(180, 80);
+        loadButton.setPrefSize(140, 50);
         loadButton.setStyle("-fx-font-size:20");
 
         Button exitButton = new Button("Exit");
-        exitButton.setPrefSize(180, 80);
+        exitButton.setPrefSize(140, 50);
         exitButton.setStyle("-fx-font-size:20");
         exitButton.setOnAction(event -> closeProgram());
 
-        menuLayout.add(startButton, 18, 15);
-        menuLayout.add(loadButton, 18, 30);
-        menuLayout.add(exitButton, 18, 45);
-
-        Scene mainMenu = new Scene(menuLayout, 1500, 996);
+        menuLayout.add(startButton, 18, 20);
+        menuLayout.add(loadButton, 18, 25);
+        menuLayout.add(exitButton, 18, 37);
 
         window.setScene(mainMenu);
         window.setTitle("Checkers");

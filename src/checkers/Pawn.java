@@ -1,12 +1,9 @@
 package checkers;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
 
 import static checkers.Checkers.TILE_SIZE;
 
@@ -32,11 +29,10 @@ public class Pawn extends StackPane {
     public Pawn(PawnType type, int x, int y) {
         this.type = type;
 
-        /*
-        Circle circle = new Circle (TILE_SIZE * 0.5);
+        Circle circle = new Circle(TILE_SIZE * 0.5);
 
-        Image blackPawnGraphic = new Image("black_pawn.png");
-        Image whitePawnGraphic = new Image("white_pawn.png");
+        Image blackPawnGraphic = new Image("file:resources/black_pawn.png");
+        Image whitePawnGraphic = new Image("file:resources/white_pawn.png");
 
         if (type == PawnType.GREY) {
             circle.setFill(new ImagePattern(blackPawnGraphic));
@@ -45,33 +41,6 @@ public class Pawn extends StackPane {
         }
 
         getChildren().add(circle);
-        */
-
-        // Make pawn (background and stroke - shadow)
-        Ellipse backgroundColor = new Ellipse(TILE_SIZE * 0.3125, TILE_SIZE * 0.26);
-        backgroundColor.setFill(Color.BLACK);
-
-        backgroundColor.setStroke(Color.BLACK);
-        backgroundColor.setStrokeWidth(TILE_SIZE * 0.03);
-
-        backgroundColor.setTranslateX((TILE_SIZE - TILE_SIZE * 0.3125 * 2) / 2);
-        backgroundColor.setTranslateY((TILE_SIZE - TILE_SIZE * 0.26 * 2) / 2 + TILE_SIZE * 0.07);
-
-        Ellipse topColor = new Ellipse(TILE_SIZE * 0.3125, TILE_SIZE * 0.26);
-
-        if (type == PawnType.GREY) {
-          topColor.setFill(Color.valueOf("#808080"));
-        } else if (type == PawnType.WHITE) {
-            topColor.setFill(Color.valueOf("#F0FFF0"));
-        }
-
-        topColor.setStroke(Color.BLACK);
-        topColor.setStrokeWidth(TILE_SIZE * 0.03);
-
-        topColor.setTranslateX((TILE_SIZE - TILE_SIZE * 0.3125 * 2) / 2);
-        topColor.setTranslateY((TILE_SIZE - TILE_SIZE * 0.26 * 2) / 2);
-
-        getChildren().addAll(backgroundColor, topColor);
 
         //Controlling by mouse
         move(x, y);
