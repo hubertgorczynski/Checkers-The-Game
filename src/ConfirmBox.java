@@ -1,5 +1,3 @@
-package checkers;
-
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,12 +13,13 @@ public class ConfirmBox {
 
     public static boolean display() {
         Stage window = new Stage();
+        window.setResizable(false);
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Checkers - exit confirmation");
         window.setMinWidth(250);
         Label label1 = new Label();
-        label1.setStyle("-fx-text-fill: white; -fx-font-size:20");
-        label1.setText("Are You sure to exit game? Make sure You saved the game.");
+        label1.setStyle("-fx-text-fill: white; -fx-font-size:24");
+        label1.setText("Are You sure to exit? Make sure You've saved the game.");
 
         Button yesButton = new Button("Yes");
         Button noButton = new Button("No");
@@ -37,7 +36,7 @@ public class ConfirmBox {
 
         VBox confirmLayout = new VBox(10);
 
-        Image confirmBackground = new Image("file:resources/sample_background.jpg");
+        Image confirmBackground = new Image("file:resources/background_wood.jpg");
         BackgroundSize backgroundSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true);
         BackgroundImage backgroundImage = new BackgroundImage(confirmBackground, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
