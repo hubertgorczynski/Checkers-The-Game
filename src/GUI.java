@@ -71,13 +71,9 @@ public class GUI {
 
         HBox layout = new HBox(10, controls, gameBoard, output);
         layout.setPadding(new Insets(10));
-        layout.setBackground(Background.EMPTY);
+        layout.setBackground(woodenTexture);
 
-        Pane backPane = new Pane();
-        backPane.setBackground(woodenTexture);
-        backPane.getChildren().add(layout);
-
-        return backPane;
+        return layout;
     }
 
     private Pane getGameBoard() {
@@ -192,7 +188,7 @@ public class GUI {
         output.setPrefColumnCount(20);
         output.setWrapText(true);
         output.setBackground(Background.EMPTY);
-        //output.setStyle("-fx-control-inner-background: rgba(0,0,0,0);");
+        output.getStylesheets().add("file:resources/text-area.css");
     }
 
     private Button getDisplayInstructionsButton() {

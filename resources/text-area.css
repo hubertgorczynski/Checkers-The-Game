@@ -1,0 +1,4 @@
+.text-area, .text-area .viewport, .text-area .content{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
