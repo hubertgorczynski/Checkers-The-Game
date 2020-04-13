@@ -17,9 +17,9 @@ public class ConfirmBox {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Checkers - exit confirmation");
         window.setMinWidth(250);
-        Label label1 = new Label();
-        label1.setStyle("-fx-text-fill: white; -fx-font-size:24");
-        label1.setText("Are You sure to exit? Make sure You've saved the game.");
+        Label areYouSureToExit = new Label();
+        areYouSureToExit.setStyle("-fx-text-fill: white; -fx-font-size:24");
+        areYouSureToExit.setText("Are You sure to exit? Make sure You've saved the game.");
 
         Button yesButton = new Button("Yes");
         Button noButton = new Button("No");
@@ -42,7 +42,7 @@ public class ConfirmBox {
         Background background = new Background(backgroundImage);
         confirmLayout.setBackground(background);
 
-        confirmLayout.getChildren().addAll(label1, yesButton, noButton);
+        confirmLayout.getChildren().addAll(areYouSureToExit, yesButton, noButton);
         confirmLayout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(confirmLayout);

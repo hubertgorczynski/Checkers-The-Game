@@ -17,11 +17,21 @@ import java.net.URI;
 public class GUI {
 
     public static final String GAME_PREAMBLE_AND_INSTRUCTIONS = "           --- Welcome in the checkers game!!! ---\n" +
+            "\nImportant!\n" +
+            "- Before You start to play please pick up player type (human or computer).\n" +
+            "- If You change player type during current play, the game will restart automatically.\n" +
+            "- If You want to take break from game, You can save it by button in left side of the board.\n" +
+            "\nMain rules:\n" +
+            "- Black pawns start first.\n" +
+            "- Normal pawn can move and kill diagonally only in one direction - forward.\n" +
+            "- The pawn which reached enemy boarder becomes a King.\n" +
+            "- King can move forward and back diagonally.\n" +
+            "- When a pawn kills enemy king it becomes the king.\n" +
             "\nColors interpretation:\n" +
             "- Green highlighted squares marked pawns that You can choose.\n" +
             "- Blue highlighted squares marked tiles where You can go.\n" +
             "- Red highlighted squares marked mandatory kills.\n" +
-            "---------------------------------------------------\n";
+            "\n---------------------------------------------------\n";
     public static TextArea output;
     private Game game;
 
@@ -141,16 +151,16 @@ public class GUI {
     }
 
     private Button getUserMoveHighlightingToggleButton() {
-        String mechanism = "user move highlighting";
-        Button userMoveHighlightingToggleButton = new Button("Disable " + mechanism + "\n");
+        String mechanism = "User moves highlighting";
+        Button userMoveHighlightingToggleButton = new Button("Disable: " + mechanism + "\n");
 
         userMoveHighlightingToggleButton.setOnAction(value -> {
             game.toggleUserMoveHighlighting();
             if (Game.USER_MOVE_HIGHLIGHTING) {
-                userMoveHighlightingToggleButton.setText("Disable " + mechanism + "\n");
+                userMoveHighlightingToggleButton.setText("Disable: " + mechanism + "\n");
                 output.appendText(mechanism + " enabled\n");
             } else {
-                userMoveHighlightingToggleButton.setText("Enable " + mechanism + "\n");
+                userMoveHighlightingToggleButton.setText("Enable: " + mechanism + "\n");
                 output.appendText(mechanism + " disabled\n");
             }
         });
@@ -160,7 +170,7 @@ public class GUI {
     }
 
     private Button getAIMoveHighlightingToggleButton() {
-        String mechanism = "computer moves highlighting";
+        String mechanism = "Computer moves highlighting";
         Button AIMoveHighlightingToggleButton = new Button("Disable " + mechanism + "\n");
 
         AIMoveHighlightingToggleButton.setOnAction(value -> {
@@ -192,7 +202,7 @@ public class GUI {
     }
 
     private Button getDisplayInstructionsButton() {
-        Button displayInstructionsButton = new Button("Instruction");
+        Button displayInstructionsButton = new Button("Game description");
         displayInstructionsButton.setOnAction(e -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://en.wikipedia.org/wiki/Draughts"));

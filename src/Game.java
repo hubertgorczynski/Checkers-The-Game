@@ -3,6 +3,8 @@ import javafx.concurrent.Task;
 import javafx.scene.Group;
 import javafx.scene.Node;
 
+import java.util.HashMap;
+
 public class Game {
 
     public static int BOARD_SIZE = 8;
@@ -72,7 +74,7 @@ public class Game {
     private void runNextMove() {
         refreshBoard();
         if (isGameOver()) {
-            Platform.runLater(() -> temporaryPause(1000));
+            Platform.runLater(() -> temporaryPause(5000));
             Platform.runLater(this::startNewGame);
         } else {
             processPlayerMove(getCurrentPlayer());
@@ -111,11 +113,13 @@ public class Game {
                 GUI.output.appendText("---------------------------------------------------\n");
                 GUI.output.appendText("!!!!!!!!!!!!!!!!!!!  White player wins  !!!!!!!!!!!!!!!!!!\n");
                 GUI.output.appendText("---------------------------------------------------\n");
+                GUI.output.appendText("\nPlease stand by, a new game will start automatically soon in 3...2...1...\n");
                 return true;
             } else {
                 GUI.output.appendText("---------------------------------------------------\n");
                 GUI.output.appendText("!!!!!!!!!!!!!!!!!!!  Black player wins   !!!!!!!!!!!!!!!!!!\n");
                 GUI.output.appendText("---------------------------------------------------\n");
+                GUI.output.appendText("\nPlease stand by, a new game will start automatically soon in 3...2...1...\n");
                 return true;
             }
         }
@@ -243,4 +247,11 @@ public class Game {
         }
         return invalidMoveError;
     }
+
+    public void saveGame() {
+        HashMap<Coordinates, UnitData> saveData = new HashMap<>();
+
+
+    }
+
 }
