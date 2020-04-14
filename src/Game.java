@@ -3,14 +3,12 @@ import javafx.concurrent.Task;
 import javafx.scene.Group;
 import javafx.scene.Node;
 
-import java.util.HashMap;
-
 public class Game {
 
     public static int BOARD_SIZE = 8;
     public static int TILE_SIZE = 100;
-    public static int PLAY_SQUARE = 0; //1 for white, 0 for black
-    public static int AI_MOVE_LAG_TIME = 600; //milliseconds
+    public static int PLAY_SQUARE = 0; // 1 for white, 0 for black
+    public static int AI_MOVE_LAG_TIME = 600;
     private static boolean RESET_GAME;
     public static boolean USER_MOVE_HIGHLIGHTING = true;
     public static boolean AI_MOVE_HIGHLIGHTING = true;
@@ -247,11 +245,4 @@ public class Game {
         }
         return invalidMoveError;
     }
-
-    public void saveGame() {
-        HashMap<Coordinates, UnitData> saveData = new HashMap<>();
-
-
-    }
-
 }

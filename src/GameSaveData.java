@@ -1,6 +1,8 @@
 import java.io.Serializable;
 import java.util.HashMap;
 
+// Class will be used in next update of a game - adding possibility to save game
+
 public class GameSaveData implements Serializable {
     private final HashMap<Coordinates, UnitData> mapData;
     private final boolean isWhiteTurn;

@@ -17,17 +17,19 @@ import java.net.URI;
 public class GUI {
 
     public static final String GAME_PREAMBLE_AND_INSTRUCTIONS = "           --- Welcome in the checkers game!!! ---\n" +
-            "\nImportant!\n" +
+            "\n[IMPORTANT]\n" +
             "- Before You start to play please pick up player type (human or computer).\n" +
             "- If You change player type during current play, the game will restart automatically.\n" +
             "- If You want to take break from game, You can save it by button in left side of the board.\n" +
-            "\nMain rules:\n" +
+            "\n[MAIN RULES]\n" +
             "- Black pawns start first.\n" +
+            "- Kills are mandatory (if You have possibility to beat enemy pawn You have to do it).\n" +
+            "- Multiple kills are allowed (You can beat few pawns if they are set diagonally after themselves.\n" +
             "- Normal pawn can move and kill diagonally only in one direction - forward.\n" +
             "- The pawn which reached enemy boarder becomes a King.\n" +
             "- King can move forward and back diagonally.\n" +
             "- When a pawn kills enemy king it becomes the king.\n" +
-            "\nColors interpretation:\n" +
+            "\n[COLORS INTERPRETATION]\n" +
             "- Green highlighted squares marked pawns that You can choose.\n" +
             "- Blue highlighted squares marked tiles where You can go.\n" +
             "- Red highlighted squares marked mandatory kills.\n" +
@@ -158,10 +160,10 @@ public class GUI {
             game.toggleUserMoveHighlighting();
             if (Game.USER_MOVE_HIGHLIGHTING) {
                 userMoveHighlightingToggleButton.setText("Disable: " + mechanism + "\n");
-                output.appendText(mechanism + " enabled\n");
+                output.appendText(mechanism + " enabled.\n");
             } else {
                 userMoveHighlightingToggleButton.setText("Enable: " + mechanism + "\n");
-                output.appendText(mechanism + " disabled\n");
+                output.appendText(mechanism + " disabled.\n");
             }
         });
 
@@ -171,16 +173,16 @@ public class GUI {
 
     private Button getAIMoveHighlightingToggleButton() {
         String mechanism = "Computer moves highlighting";
-        Button AIMoveHighlightingToggleButton = new Button("Disable " + mechanism + "\n");
+        Button AIMoveHighlightingToggleButton = new Button("Disable: " + mechanism + "\n");
 
         AIMoveHighlightingToggleButton.setOnAction(value -> {
             Game.AI_MOVE_HIGHLIGHTING = !Game.AI_MOVE_HIGHLIGHTING;
             if (Game.AI_MOVE_HIGHLIGHTING) {
-                AIMoveHighlightingToggleButton.setText("Disable " + mechanism + "\n");
-                output.appendText(mechanism + " enabled\n");
+                AIMoveHighlightingToggleButton.setText("Disable: " + mechanism + "\n");
+                output.appendText(mechanism + " enabled.\n");
             } else {
-                AIMoveHighlightingToggleButton.setText("Enable " + mechanism + "\n");
-                output.appendText(mechanism + " disabled\n");
+                AIMoveHighlightingToggleButton.setText("Enable: " + mechanism + "\n");
+                output.appendText(mechanism + " disabled.\n");
             }
         });
 
@@ -206,9 +208,9 @@ public class GUI {
         displayInstructionsButton.setOnAction(e -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://en.wikipedia.org/wiki/Draughts"));
-                output.appendText("Instructions has been displayed in Your internet browser\n");
+                output.appendText("Instructions has been displayed in Your internet browser.\n");
             } catch (Exception exception) {
-                output.appendText("We're sorry. It seems that your browser can't be accessed at this time\n");
+                output.appendText("We're sorry, it seems that your browser can't be accessed at this time.\n");
             }
         });
 
