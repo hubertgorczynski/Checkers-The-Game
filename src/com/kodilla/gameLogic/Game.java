@@ -121,7 +121,7 @@ public class Game {
             if (playAgain) {
                 return true;
             } else {
-                System.exit(1);
+                System.exit(0);
             }
         }
         return resetGame;
