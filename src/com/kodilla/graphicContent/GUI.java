@@ -56,7 +56,7 @@ public class GUI {
         primaryStage.show();
     }
 
-    private void closeProgram(Stage primaryStage) {
+    public void closeProgram(Stage primaryStage) {
         boolean answer = ConfirmBox.display();
         if (answer)
             primaryStage.close();
@@ -204,7 +204,6 @@ public class GUI {
         output.setPrefRowCount(10);
         output.setPrefColumnCount(20);
         output.setWrapText(true);
-        output.setBackground(Background.EMPTY);
         output.getStylesheets().add("file:resources/text-area.css");
     }
 

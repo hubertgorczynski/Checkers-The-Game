@@ -1,6 +1,7 @@
 package com.kodilla.gameLogic;
 
 import com.kodilla.alertMessages.InvalidMoveError;
+import com.kodilla.alertMessages.WinnerMessage;
 import com.kodilla.graphicContent.Board;
 import com.kodilla.graphicContent.GUI;
 import javafx.application.Platform;
@@ -13,7 +14,7 @@ public class Game {
     public static final int BOARD_SIZE = 8;
     public static int TILE_SIZE = 100;
     public static int AI_MOVE_LAG_TIME = 600;
-    private boolean RESET_GAME;
+    private boolean resetGame;
     public static boolean userMoveHighlighting = true;
     public static boolean aiMoveHighlighting = true;
     private Player blackPlayer;
@@ -34,7 +35,7 @@ public class Game {
         GUI.output.setText(GUI.GAME_PREAMBLE_AND_INSTRUCTIONS);
         GUI.output.appendText("\t\t\t\t--- New game begins! ---\n");
         printNewTurnDialogue();
-        RESET_GAME = false;
+        resetGame = false;
         nextPlayersTurn();
     }
 
@@ -54,7 +55,7 @@ public class Game {
             startNewGame();
         } else {
             setPlayer(player);
-            RESET_GAME = true;
+            resetGame = true;
         }
     }
 
@@ -76,7 +77,7 @@ public class Game {
     private void runNextMove() {
         refreshBoard();
         if (isGameOver()) {
-            Platform.runLater(() -> temporaryPause(5000));
+            Platform.runLater(() -> temporaryPause(500));
             Platform.runLater(this::startNewGame);
         } else {
             processPlayerMove(getCurrentPlayer());
@@ -110,22 +111,20 @@ public class Game {
     }
 
     private boolean isGameOver() {
+        boolean playAgain;
         if (board.getPossibleMoves().isEmpty()) {
             if (blackPlayer.isPlayersTurn()) {
-                GUI.output.appendText("---------------------------------------------------\n");
-                GUI.output.appendText("!!!!!!!!!!!!!!!!!!!  White player wins  !!!!!!!!!!!!!!!!!!\n");
-                GUI.output.appendText("---------------------------------------------------\n");
-                GUI.output.appendText("\nPlease stand by, a new game will start automatically soon in 3...2...1...\n");
+                playAgain = WinnerMessage.display("White");
+            } else {
+                playAgain = WinnerMessage.display("Black");
+            }
+            if (playAgain) {
                 return true;
             } else {
-                GUI.output.appendText("---------------------------------------------------\n");
-                GUI.output.appendText("!!!!!!!!!!!!!!!!!!!  Black player wins   !!!!!!!!!!!!!!!!!!\n");
-                GUI.output.appendText("---------------------------------------------------\n");
-                GUI.output.appendText("\nPlease stand by, a new game will start automatically soon in 3...2...1...\n");
-                return true;
+                System.exit(1);
             }
         }
-        return RESET_GAME;
+        return resetGame;
     }
 
     private void processPlayerMove(Player player) {
