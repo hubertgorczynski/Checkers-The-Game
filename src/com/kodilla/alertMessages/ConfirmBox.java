@@ -11,9 +11,9 @@ import javafx.stage.Stage;
 
 public class ConfirmBox {
 
-    private static boolean answer;
+    private boolean answer;
 
-    public static boolean display() {
+    public boolean display() {
         Stage stage = new Stage();
         stage.setTitle("Checkers - exit confirmation");
         stage.setWidth(500);
@@ -28,7 +28,7 @@ public class ConfirmBox {
         return answer;
     }
 
-    private static VBox buildLayout(Stage stage) {
+    private VBox buildLayout(Stage stage) {
         VBox layout = new VBox(10);
 
         Image confirmBackground = new Image("file:resources/background_wood.jpg");
@@ -51,7 +51,7 @@ public class ConfirmBox {
         return layout;
     }
 
-    private static Button createYesButton(Stage stage) {
+    private Button createYesButton(Stage stage) {
         Button yesButton = new Button("Yes");
         yesButton.setOnAction(event -> {
             answer = true;
@@ -60,7 +60,7 @@ public class ConfirmBox {
         return yesButton;
     }
 
-    private static Button createNoButton(Stage stage) {
+    private Button createNoButton(Stage stage) {
         Button noButton = new Button("No");
         noButton.setOnAction(event -> {
             answer = false;

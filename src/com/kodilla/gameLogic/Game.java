@@ -111,12 +111,13 @@ public class Game {
     }
 
     private boolean isGameOver() {
+        WinnerMessage winnerMessage = new WinnerMessage();
         boolean playAgain;
         if (board.getPossibleMoves().isEmpty()) {
             if (blackPlayer.isPlayersTurn()) {
-                playAgain = WinnerMessage.display("White");
+                playAgain = winnerMessage.display("White");
             } else {
-                playAgain = WinnerMessage.display("Black");
+                playAgain = winnerMessage.display("Black");
             }
             if (playAgain) {
                 return true;

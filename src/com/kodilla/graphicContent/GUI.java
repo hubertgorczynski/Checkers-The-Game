@@ -57,7 +57,8 @@ public class GUI {
     }
 
     public void closeProgram(Stage primaryStage) {
-        boolean answer = ConfirmBox.display();
+        ConfirmBox confirmBox = new ConfirmBox();
+        boolean answer = confirmBox.display();
         if (answer)
             primaryStage.close();
     }

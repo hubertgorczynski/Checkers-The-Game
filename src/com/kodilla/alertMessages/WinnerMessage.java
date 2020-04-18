@@ -11,9 +11,9 @@ import javafx.stage.Stage;
 
 public class WinnerMessage {
 
-    private static boolean answer;
+    private boolean answer;
 
-    public static boolean display(String winner) {
+    public boolean display(String winner) {
         Stage stage = new Stage();
         stage.setTitle("Checkers - Congratulation!");
         stage.setWidth(650);
@@ -28,7 +28,7 @@ public class WinnerMessage {
         return answer;
     }
 
-    private static VBox buildLayout(Stage stage, String winner) {
+    private VBox buildLayout(Stage stage, String winner) {
         VBox layout = new VBox(10);
 
         Image congratulationBackground = new Image("file:resources/background_wood.jpg");
@@ -51,7 +51,7 @@ public class WinnerMessage {
         return layout;
     }
 
-    private static Button createYesButton(Stage stage) {
+    private Button createYesButton(Stage stage) {
         Button yesButton = new Button("Yes! (start new game)");
         yesButton.setOnAction(event -> {
             answer = true;
@@ -60,8 +60,8 @@ public class WinnerMessage {
         return yesButton;
     }
 
-    private static Button createNoButton(Stage stage) {
-        Button noButton = new Button("No");
+    private Button createNoButton(Stage stage) {
+        Button noButton = new Button("No. (exit game)");
         noButton.setOnAction(event -> {
             answer = false;
             stage.close();
