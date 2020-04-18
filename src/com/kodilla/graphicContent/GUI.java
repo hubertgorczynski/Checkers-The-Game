@@ -20,7 +20,7 @@ import java.net.URI;
 
 public class GUI {
 
-    public static final String GAME_PREAMBLE_AND_INSTRUCTIONS = "\t \t --- WELCOME IN THE CHECKERS GAME! ---\n" +
+    public static final String GAME_PREAMBLE_AND_INSTRUCTIONS = "\n\t \t --- WELCOME IN THE CHECKERS GAME! ---\n" +
             "------------------------------------------------------------------\n" +
             "\n[IMPORTANT]\n" +
             "- Before You start to play please pick up player type (human or computer) from left side panel.\n" +
@@ -70,7 +70,7 @@ public class GUI {
     }
 
     private void initialiseApplicationBackend() {
-        TextAreaManager textAreaManager = new TextAreaManager();
+        textAreaManager = new TextAreaManager();
         Player initialBlackPlayer = new HumanPlayer(Team.BLACK);
         Player initialWhitePlayer = new HumanPlayer(Team.WHITE);
         game = new Game(initialBlackPlayer, initialWhitePlayer, textAreaManager);

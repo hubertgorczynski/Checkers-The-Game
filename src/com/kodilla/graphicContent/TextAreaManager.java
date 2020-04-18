@@ -4,7 +4,7 @@ import javafx.scene.control.TextArea;
 
 public class TextAreaManager {
 
-    public TextArea textArea;
+    private final TextArea textArea = new TextArea();
 
     public TextArea setUpGameOutputFeed() {
         textArea.setPrefWidth(450);

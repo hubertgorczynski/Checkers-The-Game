@@ -42,7 +42,7 @@ public class WinnerMessage {
 
         Label congratulation = new Label();
         congratulation.setStyle("-fx-text-fill: white; -fx-font-size:20");
-        congratulation.setText("Congratulation! " + winner + " player wins! Do You want to play again?");
+        congratulation.setText("Congratulation! " + winner + " player wins. Do You want to play again?");
 
         Button yesButton = createYesButton(stage);
         Button noButton = createNoButton(stage);

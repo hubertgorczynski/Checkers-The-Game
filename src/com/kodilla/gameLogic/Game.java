@@ -43,7 +43,6 @@ public class Game {
     }
 
     private void resetGame() {
-        TextAreaManager textAreaManager = new TextAreaManager();
         board = new Board(textAreaManager);
         setAllUnitsLocked();
         addMouseControlToAllUnits();
