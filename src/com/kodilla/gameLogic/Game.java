@@ -13,8 +13,8 @@ import javafx.scene.Node;
 public class Game {
 
     public static final int BOARD_SIZE = 8;
-    public static int TILE_SIZE = 100;
-    public static int AI_MOVE_LAG_TIME = 600;
+    public static final int TILE_SIZE = 100;
+    public static final int AI_MOVE_LAG_TIME = 600;
     private boolean resetGame;
     public static boolean userMoveHighlighting = true;
     public static boolean aiMoveHighlighting = true;
@@ -22,7 +22,7 @@ public class Game {
     private Player whitePlayer;
     private Board board;
     private final Group components;
-    public TextAreaManager textAreaManager;
+    private final TextAreaManager textAreaManager;
 
     public Game(Player blackPlayer, Player whitePlayer, TextAreaManager textAreaManager) {
         this.textAreaManager = textAreaManager;

@@ -61,7 +61,7 @@ public class WinnerMessage {
     }
 
     private Button createNoButton(Stage stage) {
-        Button noButton = new Button("No. (exit game)");
+        Button noButton = new Button("No (exit game)");
         noButton.setOnAction(event -> {
             answer = false;
             stage.close();

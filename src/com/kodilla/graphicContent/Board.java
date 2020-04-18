@@ -15,7 +15,7 @@ public class Board {
     private final Group blackUnits = new Group();
     private final Group whiteUnits = new Group();
     private ArrayList<Move> possibleMoves = new ArrayList<>();
-    public TextAreaManager textAreaManager;
+    private final TextAreaManager textAreaManager;
 
     public Board(TextAreaManager textAreaManager) {
         this.textAreaManager = textAreaManager;

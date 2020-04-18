@@ -52,7 +52,7 @@ public class ConfirmBox {
     }
 
     private Button createYesButton(Stage stage) {
-        Button yesButton = new Button("Yes.");
+        Button yesButton = new Button("Yes");
         yesButton.setOnAction(event -> {
             answer = true;
             stage.close();
@@ -61,7 +61,7 @@ public class ConfirmBox {
     }
 
     private Button createNoButton(Stage stage) {
-        Button noButton = new Button("No.");
+        Button noButton = new Button("No");
         noButton.setOnAction(event -> {
             answer = false;
             stage.close();

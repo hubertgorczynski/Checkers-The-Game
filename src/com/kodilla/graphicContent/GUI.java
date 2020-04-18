@@ -39,7 +39,7 @@ public class GUI {
             "- Blue highlighted squares marked tiles where You can go.\n" +
             "- Red highlighted squares marked mandatory kills.\n" +
             "\n------------------------------------------------------------------\n";
-    public TextAreaManager textAreaManager;
+    private TextAreaManager textAreaManager;
     private Game game;
 
     public GUI(Stage primaryStage) {
