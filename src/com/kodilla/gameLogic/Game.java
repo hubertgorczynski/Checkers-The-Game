@@ -4,6 +4,7 @@ import com.kodilla.alertMessages.InvalidMoveError;
 import com.kodilla.alertMessages.WinnerMessage;
 import com.kodilla.graphicContent.Board;
 import com.kodilla.graphicContent.GUI;
+import com.kodilla.graphicContent.TextAreaManager;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Group;
@@ -21,8 +22,10 @@ public class Game {
     private Player whitePlayer;
     private Board board;
     private final Group components;
+    public TextAreaManager textAreaManager;
 
-    public Game(Player blackPlayer, Player whitePlayer) {
+    public Game(Player blackPlayer, Player whitePlayer, TextAreaManager textAreaManager) {
+        this.textAreaManager = textAreaManager;
         components = new Group();
         this.blackPlayer = blackPlayer;
         this.whitePlayer = whitePlayer;
@@ -32,15 +35,16 @@ public class Game {
 
     private void startNewGame() {
         resetGame();
-        GUI.output.setText(GUI.GAME_PREAMBLE_AND_INSTRUCTIONS);
-        GUI.output.appendText("\t\t\t\t--- New game begins! ---\n");
+        textAreaManager.display(GUI.GAME_PREAMBLE_AND_INSTRUCTIONS);
+        textAreaManager.display("\t\t\t\t--- New game begins! ---\n");
         printNewTurnDialogue();
         resetGame = false;
         nextPlayersTurn();
     }
 
     private void resetGame() {
-        board = new Board();
+        TextAreaManager textAreaManager = new TextAreaManager();
+        board = new Board(textAreaManager);
         setAllUnitsLocked();
         addMouseControlToAllUnits();
         components.getChildren().setAll(board.getGUIComponents().getChildren());
@@ -173,8 +177,8 @@ public class Game {
         } else {
             player = "White";
         }
-        GUI.output.appendText("------------------------------------------------------------------\n");
-        GUI.output.appendText(" \t \t \t \t \t " + player + "'s turn\n");
+        textAreaManager.display("------------------------------------------------------------------\n");
+        textAreaManager.display(" \t \t \t \t \t " + player + "'s turn\n");
     }
 
     public Group getComponents() {

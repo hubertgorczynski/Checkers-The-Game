@@ -39,7 +39,7 @@ public class GUI {
             "- Blue highlighted squares marked tiles where You can go.\n" +
             "- Red highlighted squares marked mandatory kills.\n" +
             "\n------------------------------------------------------------------\n";
-    public static TextArea output;
+    public TextAreaManager textAreaManager;
     private Game game;
 
     public GUI(Stage primaryStage) {
@@ -70,9 +70,10 @@ public class GUI {
     }
 
     private void initialiseApplicationBackend() {
+        TextAreaManager textAreaManager = new TextAreaManager();
         Player initialBlackPlayer = new HumanPlayer(Team.BLACK);
         Player initialWhitePlayer = new HumanPlayer(Team.WHITE);
-        game = new Game(initialBlackPlayer, initialWhitePlayer);
+        game = new Game(initialBlackPlayer, initialWhitePlayer, textAreaManager);
     }
 
     private Parent createGUI() {
@@ -85,7 +86,7 @@ public class GUI {
 
         VBox controls = buildControls();
         Pane gameBoard = getGameBoard();
-        setUpGameOutputFeed();
+        TextArea output = textAreaManager.setUpGameOutputFeed();
 
         HBox layout = new HBox(10, controls, gameBoard, output);
         layout.setPadding(new Insets(10));
@@ -166,10 +167,10 @@ public class GUI {
             game.toggleUserMoveHighlighting();
             if (Game.userMoveHighlighting) {
                 userMoveHighlightingToggleButton.setText("Disable: " + mechanism + "\n");
-                output.appendText(mechanism + " enabled.\n");
+                textAreaManager.display(mechanism + " enabled.\n");
             } else {
                 userMoveHighlightingToggleButton.setText("Enable: " + mechanism + "\n");
-                output.appendText(mechanism + " disabled.\n");
+                textAreaManager.display(mechanism + " disabled.\n");
             }
         });
 
@@ -185,10 +186,10 @@ public class GUI {
             Game.aiMoveHighlighting = !Game.aiMoveHighlighting;
             if (Game.aiMoveHighlighting) {
                 AIMoveHighlightingToggleButton.setText("Disable: " + mechanism + "\n");
-                output.appendText(mechanism + " enabled.\n");
+                textAreaManager.display(mechanism + " enabled.\n");
             } else {
                 AIMoveHighlightingToggleButton.setText("Enable: " + mechanism + "\n");
-                output.appendText(mechanism + " disabled.\n");
+                textAreaManager.display(mechanism + " disabled.\n");
             }
         });
 
@@ -196,26 +197,15 @@ public class GUI {
         return AIMoveHighlightingToggleButton;
     }
 
-    private void setUpGameOutputFeed() {
-        output = new TextArea();
-        output.setPrefWidth(450);
-        output.setMaxWidth(TextArea.USE_PREF_SIZE);
-        output.setMinWidth(TextArea.USE_PREF_SIZE);
-        output.setEditable(false);
-        output.setPrefRowCount(10);
-        output.setPrefColumnCount(20);
-        output.setWrapText(true);
-        output.getStylesheets().add("file:resources/text-area.css");
-    }
 
     private Button getDisplayInstructionsButton() {
         Button displayInstructionsButton = new Button("Game description");
         displayInstructionsButton.setOnAction(e -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://en.wikipedia.org/wiki/Draughts"));
-                output.appendText("Instructions has been displayed in Your internet browser.\n");
+                textAreaManager.display("Instructions has been displayed in Your internet browser.\n");
             } catch (Exception exception) {
-                output.appendText("We're sorry, it seems that your browser can't be accessed at this time.\n");
+                textAreaManager.display("We're sorry, it seems that your browser can't be accessed at this time.\n");
             }
         });
 

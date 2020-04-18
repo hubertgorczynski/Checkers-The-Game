@@ -1,7 +1,6 @@
 package com.kodilla.gameLogic;
 
 import com.kodilla.graphicContent.Board;
-import com.kodilla.graphicContent.GUI;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -19,8 +18,6 @@ public class RandomAIPlayer extends Player {
 
     @Override
     public Optional<Move> getPlayerMove(Board board) {
-        GUI.output.appendText("Computer is thinking... \n");
-
         ArrayList<Move> possibleMoves = board.getPossibleMoves();
         int r = rand.nextInt(possibleMoves.size());
         return Optional.of(possibleMoves.get(r));

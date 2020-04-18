@@ -15,8 +15,10 @@ public class Board {
     private final Group blackUnits = new Group();
     private final Group whiteUnits = new Group();
     private ArrayList<Move> possibleMoves = new ArrayList<>();
+    public TextAreaManager textAreaManager;
 
-    public Board() {
+    public Board(TextAreaManager textAreaManager) {
+        this.textAreaManager = textAreaManager;
         board = new Tile[Game.BOARD_SIZE][Game.BOARD_SIZE];
         setCurrentTeam(Team.BLACK);
 
@@ -241,13 +243,13 @@ public class Board {
         switch (move.getType()) {
             case NONE:
                 unit.abortMove();
-                GUI.output.appendText("Invalid move detected!");
-                GUI.output.appendText(move.getInvalidMoveError().getExplanation());
+                textAreaManager.display("Invalid move detected!");
+                textAreaManager.display(move.getInvalidMoveError().getExplanation());
                 break;
             case NORMAL:
                 moveUnit(origin, target, unit, kingIsCreated);
                 turnFinished = true;
-                GUI.output.appendText(unit.getTeam() + " made a normal move.\n");
+                textAreaManager.display(unit.getTeam() + " made a normal move.\n");
                 break;
             case KILL:
                 Unit attackedUnit = getUnitAtPos(Coordinates.getKillCoords(move));
@@ -259,7 +261,7 @@ public class Board {
                 } else {
                     turnFinished = true;
                 }
-                GUI.output.appendText(unit.getTeam() + " killed enemy pawn.\n");
+                textAreaManager.display(unit.getTeam() + " killed enemy pawn.\n");
                 break;
         }
         return turnFinished;
@@ -279,7 +281,7 @@ public class Board {
         getTile(target).setUnit(unit);
         if (kingIsCreated) {
             unit.toggleKing();
-            GUI.output.appendText("Pawn (x:" + unit.getCurrentX() + ", y:" + unit.getCurrentY() + ") became a king!\n");
+            textAreaManager.display("Pawn (x:" + unit.getCurrentX() + ", y:" + unit.getCurrentY() + ") became a king!\n");
         }
     }
 
