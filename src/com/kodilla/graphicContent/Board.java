@@ -281,7 +281,7 @@ public class Board {
         getTile(target).setUnit(unit);
         if (kingIsCreated) {
             unit.toggleKing();
-            textAreaManager.display("Pawn (x:" + unit.getCurrentX() + ", y:" + unit.getCurrentY() + ") became a king!\n");
+            textAreaManager.display("Pawn became a king!\n");
         }
     }
 

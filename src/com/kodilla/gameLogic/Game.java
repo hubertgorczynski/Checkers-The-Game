@@ -5,10 +5,16 @@ import com.kodilla.alertMessages.WinnerMessage;
 import com.kodilla.graphicContent.Board;
 import com.kodilla.graphicContent.GUI;
 import com.kodilla.graphicContent.TextAreaManager;
+import com.kodilla.saveLoadData.GameSaveData;
+import com.kodilla.saveLoadData.UnitData;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Group;
 import javafx.scene.Node;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Game {
 
@@ -251,4 +257,50 @@ public class Game {
         }
         return invalidMoveError;
     }
+
+    /*
+    public void saveGame() {
+        HashMap<Coordinates, UnitData> unitHashMap = new HashMap<>();
+        for (Node node : components.getChildren()) {
+            UnitData unitData = new UnitData(
+                    Unit.isWhite(),
+                    Unit.isKing()
+            );
+            Coordinates unitCoordinates = new Coordinates(Unit.getPos());
+            unitHashMap.put(unitCoordinates, unitData);
+        }
+
+        boolean humanPlaysWhiteUnits = HumanPlayer.getPlayerTeam() = Team.WHITE;
+        boolean humanPlaysBlackUnits = HumanPlayer.getPlayerTeam() = Team.BLACK;
+        GameSaveData gameSaveData = new GameSaveData(
+                unitHashMap,
+                Board.getCurrentTeam(),
+                humanPlaysWhiteUnits,
+                humanPlaysBlackUnits,
+                userMoveHighlighting,
+                aiMoveHighlighting
+        );
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("save.txt"));
+            out.writeObject(gameSaveData);
+            out.close();
+            textAreaManager.display("Game saved!");
+        } catch (IOException ex) {
+            textAreaManager.display("Cannot create save file!");
+        }
+    }
+
+    public void loadGame() {
+        try {
+            ObjectInputStream stream = new ObjectInputStream(new FileInputStream("save.txt"));
+            GameSaveData loadData = (GameSaveData) stream.readObject();
+
+        } catch (IOException e) {
+            textAreaManager.display("Save file not found!");
+        } catch (ClassNotFoundException e) {
+            textAreaManager.display("Save file crashed!");
+        }
+    }
+
+     */
 }
