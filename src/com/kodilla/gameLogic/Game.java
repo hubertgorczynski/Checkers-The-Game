@@ -258,23 +258,26 @@ public class Game {
         return invalidMoveError;
     }
 
-    /*
-    public void saveGame() {
+    public void saveGame(Player player1, Player player2, Board board) {
         HashMap<Coordinates, UnitData> unitHashMap = new HashMap<>();
         for (Node node : components.getChildren()) {
-            UnitData unitData = new UnitData(
-                    Unit.isWhite(),
-                    Unit.isKing()
-            );
-            Coordinates unitCoordinates = new Coordinates(Unit.getPos());
-            unitHashMap.put(unitCoordinates, unitData);
+            if (node instanceof Unit) {
+                Unit unit = (Unit) node;
+                UnitData unitData = new UnitData(
+                        unit.isWhite(),
+                        unit.isKing()
+                );
+                Coordinates unitCoordinates = unit.getPos();
+                unitHashMap.put(unitCoordinates, unitData);
+            }
         }
 
-        boolean humanPlaysWhiteUnits = HumanPlayer.getPlayerTeam() = Team.WHITE;
-        boolean humanPlaysBlackUnits = HumanPlayer.getPlayerTeam() = Team.BLACK;
+        boolean humanPlaysWhiteUnits = player1.getPlayerTeam() == Team.WHITE;
+        boolean humanPlaysBlackUnits = player2.getPlayerTeam() == Team.BLACK;
+
         GameSaveData gameSaveData = new GameSaveData(
                 unitHashMap,
-                Board.getCurrentTeam(),
+                board.getCurrentTeam(),
                 humanPlaysWhiteUnits,
                 humanPlaysBlackUnits,
                 userMoveHighlighting,
@@ -301,6 +304,4 @@ public class Game {
             textAreaManager.display("Save file crashed!");
         }
     }
-
-     */
 }
