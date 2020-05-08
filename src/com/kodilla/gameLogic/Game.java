@@ -11,10 +11,11 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Game {
 
@@ -272,36 +273,108 @@ public class Game {
             }
         }
 
-        boolean humanPlaysWhiteUnits = player1.getPlayerTeam() == Team.WHITE;
-        boolean humanPlaysBlackUnits = player2.getPlayerTeam() == Team.BLACK;
+        boolean player1IsHuman = player1.isPlayerHuman();
+        boolean player2IsHuman = player2.isPlayerHuman();
+        Team player1Team = player1.getPlayerTeam();
+        Team player2Team = player2.getPlayerTeam();
 
         GameSaveData gameSaveData = new GameSaveData(
                 unitHashMap,
                 board.getCurrentTeam(),
-                humanPlaysWhiteUnits,
-                humanPlaysBlackUnits,
+                player1IsHuman,
+                player2IsHuman,
+                player1Team,
+                player2Team,
                 userMoveHighlighting,
                 aiMoveHighlighting
         );
         try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("save.txt"));
-            out.writeObject(gameSaveData);
-            out.close();
-            textAreaManager.display("Game saved!");
+            ObjectOutputStream saveData = new ObjectOutputStream(new FileOutputStream("save.txt"));
+            saveData.writeObject(gameSaveData);
+            saveData.close();
+            textAreaManager.display("\nGame saved correctly!");
         } catch (IOException ex) {
-            textAreaManager.display("Cannot create save file!");
+            textAreaManager.display("\nCannot create save file!");
         }
     }
 
-    public void loadGame() {
+    public void loadGame(Player player1, Player player2, Board board) {
         try {
             ObjectInputStream stream = new ObjectInputStream(new FileInputStream("save.txt"));
             GameSaveData loadData = (GameSaveData) stream.readObject();
 
+            board.getWhiteUnits().getChildren().clear();
+            board.getBlackUnits().getChildren().clear();
+
+            HashMap<Coordinates, UnitData> unitDataHashMap = loadData.getMapData();
+            for (Map.Entry<Coordinates, UnitData> unitDataEntry : unitDataHashMap.entrySet()) {
+                Coordinates position = unitDataEntry.getKey();
+                UnitType type;
+                Team team;
+
+                if (unitDataEntry.getValue().isKing()) {
+                    type = UnitType.KING;
+                } else {
+                    type = UnitType.PAWN;
+                }
+
+                if (unitDataEntry.getValue().isWhite()) {
+                    team = Team.WHITE;
+                } else {
+                    team = Team.BLACK;
+                }
+
+                Unit loadedUnit = new Unit(type, team, position);
+                board.getTile(position).setUnit(loadedUnit);
+                if (team == Team.WHITE) {
+                    board.getWhiteUnits().getChildren().add(loadedUnit);
+                } else {
+                    board.getBlackUnits().getChildren().add(loadedUnit);
+                }
+            }
+
+            board.setCurrentTeam(loadData.getCurrentTeam());
+
+            if (loadData.isPlayer1IsHuman()) {
+                player1.setPlayerType(PlayerType.USER);
+            } else {
+                player1.setPlayerType(PlayerType.AI);
+            }
+
+            if (loadData.isPlayer2IsHuman()) {
+                player2.setPlayerType(PlayerType.USER);
+            } else {
+                player2.setPlayerType(PlayerType.AI);
+            }
+
+            player1.setPlayerTeam(loadData.getPlayer1Team());
+            player2.setPlayerTeam(loadData.getPlayer2Team());
+
+            userMoveHighlighting = loadData.isUserMovesHighlighting();
+            aiMoveHighlighting = loadData.isComputerMovesHighlighting();
+            toggleUserMoveHighlightingTextButton(userMoveHighlighting);
+            toggleComputerMoveHighlightingTextButton(aiMoveHighlighting);
+
         } catch (IOException e) {
-            textAreaManager.display("Save file not found!");
+            textAreaManager.display("\nSave file not found!");
         } catch (ClassNotFoundException e) {
-            textAreaManager.display("Save file crashed!");
+            textAreaManager.display("\nSave file crashed!");
+        }
+    }
+
+    private void toggleUserMoveHighlightingTextButton(boolean isHighlighting) {
+        if (isHighlighting) {
+            GUI.userMoveHighlightingToggleButton.setText("Disable: User moves highlighting \n");
+        } else {
+            GUI.userMoveHighlightingToggleButton.setText("Enable: User moves highlighting \n");
+        }
+    }
+
+    private void toggleComputerMoveHighlightingTextButton(boolean isHighlighting) {
+        if (isHighlighting) {
+            GUI.AIMoveHighlightingToggleButton.setText("Disable: Computer moves highlighting \n");
+        } else {
+            GUI.AIMoveHighlightingToggleButton.setText("Enable: Computer moves highlighting \n");
         }
     }
 }

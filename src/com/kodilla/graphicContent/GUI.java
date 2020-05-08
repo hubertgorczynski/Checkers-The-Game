@@ -222,6 +222,7 @@ public class GUI {
 
     private Button getSaveGameButton() {
         Button saveGameButton = new Button("Save game");
+        //saveGameButton.setOnAction(value -> game.saveGame());
         saveGameButton.setMaxWidth(Double.MAX_VALUE);
         return saveGameButton;
     }
