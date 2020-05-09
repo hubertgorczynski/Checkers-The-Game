@@ -4,6 +4,7 @@ import com.kodilla.alertMessages.InvalidMoveError;
 import com.kodilla.alertMessages.WinnerMessage;
 import com.kodilla.graphicContent.Board;
 import com.kodilla.graphicContent.GUI;
+import com.kodilla.graphicContent.MoveHighlightingManager;
 import com.kodilla.graphicContent.TextAreaManager;
 import com.kodilla.saveLoadData.GameSaveData;
 import com.kodilla.saveLoadData.UnitData;
@@ -14,6 +15,7 @@ import javafx.scene.Node;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Game {
@@ -22,16 +24,16 @@ public class Game {
     public static final int TILE_SIZE = 100;
     public static final int AI_MOVE_LAG_TIME = 600;
     private boolean resetGame;
-    public static boolean userMoveHighlighting = true;
-    public static boolean aiMoveHighlighting = true;
     private Player blackPlayer;
     private Player whitePlayer;
     private Board board;
     private final Group components;
     private final TextAreaManager textAreaManager;
+    private MoveHighlightingManager moveHighlightingManager;
 
-    public Game(Player blackPlayer, Player whitePlayer, TextAreaManager textAreaManager) {
+    public Game(Player blackPlayer, Player whitePlayer, TextAreaManager textAreaManager, MoveHighlightingManager moveHighlightingManager) {
         this.textAreaManager = textAreaManager;
+        this.moveHighlightingManager = moveHighlightingManager;
         components = new Group();
         this.blackPlayer = blackPlayer;
         this.whitePlayer = whitePlayer;
@@ -49,7 +51,7 @@ public class Game {
     }
 
     private void resetGame() {
-        board = new Board(textAreaManager);
+        board = new Board(textAreaManager, moveHighlightingManager);
         setAllUnitsLocked();
         addMouseControlToAllUnits();
         components.getChildren().setAll(board.getGUIComponents().getChildren());
@@ -66,11 +68,6 @@ public class Game {
             setPlayer(player);
             resetGame = true;
         }
-    }
-
-    public void toggleUserMoveHighlighting() {
-        userMoveHighlighting = !userMoveHighlighting;
-        refreshBoard();
     }
 
     private void setAllUnitsLocked() {
@@ -101,7 +98,7 @@ public class Game {
         }
     }
 
-    private void refreshBoard() {
+    public void refreshBoard() {
         board.resetTileColors();
         if (getCurrentPlayer().isPlayerHuman()) {
             Platform.runLater(() -> {
@@ -258,21 +255,12 @@ public class Game {
         return invalidMoveError;
     }
 
-    public Player getBlackPlayer() {
-        return blackPlayer;
-    }
+    public void saveGame() {
+        List<Node> allUnits = board.getBlackUnits().getChildren();
+        allUnits.addAll(board.getWhiteUnits().getChildren());
 
-    public Player getWhitePlayer() {
-        return whitePlayer;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public void saveGame(Player player1, Player player2, Board board) {
         HashMap<Coordinates, UnitData> unitHashMap = new HashMap<>();
-        for (Node node : components.getChildren()) {
+        for (Node node : allUnits) {
             if (node instanceof Unit) {
                 Unit unit = (Unit) node;
                 UnitData unitData = new UnitData(
@@ -284,20 +272,15 @@ public class Game {
             }
         }
 
-        boolean player1IsHuman = player1.isPlayerHuman();
-        boolean player2IsHuman = player2.isPlayerHuman();
-        Team player1Team = player1.getPlayerTeam();
-        Team player2Team = player2.getPlayerTeam();
-
         GameSaveData gameSaveData = new GameSaveData(
                 unitHashMap,
                 board.getCurrentTeam(),
-                player1IsHuman,
-                player2IsHuman,
-                player1Team,
-                player2Team,
-                userMoveHighlighting,
-                aiMoveHighlighting
+                blackPlayer.isPlayerHuman(),
+                whitePlayer.isPlayerHuman(),
+                blackPlayer.getPlayerTeam(),
+                whitePlayer.getPlayerTeam(),
+                moveHighlightingManager,
+                textAreaManager.getTextAreaContent()
         );
         try {
             ObjectOutputStream saveData = new ObjectOutputStream(new FileOutputStream("save.txt"));
@@ -309,10 +292,11 @@ public class Game {
         }
     }
 
-    public void loadGame(Player player1, Player player2, Board board) {
+    public void loadGame() {
         try {
             ObjectInputStream stream = new ObjectInputStream(new FileInputStream("save.txt"));
             GameSaveData loadData = (GameSaveData) stream.readObject();
+            stream.close();
 
             board.getWhiteUnits().getChildren().clear();
             board.getBlackUnits().getChildren().clear();
@@ -344,27 +328,27 @@ public class Game {
                 }
             }
 
-            board.setCurrentTeam(loadData.getCurrentTeam());
+            board.setCurrentTeam(loadData.getCurrentTeamMove());
 
-            if (loadData.isPlayer1IsHuman()) {
-                player1.setPlayerType(PlayerType.USER);
+            if (loadData.isBlackPlayerIsHuman()) {
+                blackPlayer.setPlayerType(PlayerType.USER);
             } else {
-                player1.setPlayerType(PlayerType.AI);
+                blackPlayer.setPlayerType(PlayerType.AI);
             }
 
-            if (loadData.isPlayer2IsHuman()) {
-                player2.setPlayerType(PlayerType.USER);
+            if (loadData.isWhitePlayerIsHuman()) {
+                whitePlayer.setPlayerType(PlayerType.USER);
             } else {
-                player2.setPlayerType(PlayerType.AI);
+                blackPlayer.setPlayerType(PlayerType.AI);
             }
 
-            player1.setPlayerTeam(loadData.getPlayer1Team());
-            player2.setPlayerTeam(loadData.getPlayer2Team());
+            blackPlayer.setPlayerTeam(loadData.getBlackPlayerTeam());
+            whitePlayer.setPlayerTeam(loadData.getWhitePlayerTeam());
 
-            userMoveHighlighting = loadData.isUserMovesHighlighting();
-            aiMoveHighlighting = loadData.isComputerMovesHighlighting();
-            GUI.setTextOnToggleHighlightingButton(aiMoveHighlighting, userMoveHighlighting)
+            moveHighlightingManager = loadData.getMoveHighlightingManager();
 
+            textAreaManager.setTextAreaContent(loadData.getTextAreaContent());
+            textAreaManager.display("\nGame loaded correctly!");
         } catch (IOException e) {
             textAreaManager.display("\nSave file not found!");
         } catch (ClassNotFoundException e) {

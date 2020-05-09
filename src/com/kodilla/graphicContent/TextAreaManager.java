@@ -21,4 +21,12 @@ public class TextAreaManager {
     public void display(String text) {
         textArea.appendText(text);
     }
+
+    public String getTextAreaContent() {
+        return textArea.getText();
+    }
+
+    public void setTextAreaContent(String text) {
+        textArea.setText(text);
+    }
 }

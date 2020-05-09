@@ -2,6 +2,7 @@ package com.kodilla.saveLoadData;
 
 import com.kodilla.gameLogic.Coordinates;
 import com.kodilla.gameLogic.Team;
+import com.kodilla.graphicContent.MoveHighlightingManager;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -9,55 +10,55 @@ import java.util.HashMap;
 public class GameSaveData implements Serializable {
     private final HashMap<Coordinates, UnitData> mapData;
     private final Team currentTeamMove;
-    boolean player1IsHuman;
-    boolean player2IsHuman;
-    Team player1Team;
-    Team player2Team;
-    private final boolean isHumanMovesHighlighting;
-    private final boolean isComputerMovesHighlighting;
+    boolean blackPlayerIsHuman;
+    boolean whitePlayerIsHuman;
+    Team blackPlayerTeam;
+    Team whitePlayerTeam;
+    private final MoveHighlightingManager moveHighlightingManager;
+    private final String textAreaContent;
 
     public GameSaveData(HashMap<Coordinates, UnitData> mapData, Team currentTeamMove,
-                        boolean player1IsHuman, boolean player2IsHuman, Team player1Team, Team player2Team,
-                        boolean isHumanMovesHighlighting, boolean isComputerMovesHighlighting) {
+                        boolean blackPlayerIsHuman, boolean whitePlayerIsHuman, Team blackPlayerTeam, Team whitePlayerTeam,
+                        MoveHighlightingManager moveHighlightingManager, String textAreaContent) {
         this.mapData = mapData;
         this.currentTeamMove = currentTeamMove;
-        this.player1IsHuman = player1IsHuman;
-        this.player2IsHuman = player2IsHuman;
-        this.player1Team = player1Team;
-        this.player2Team = player2Team;
-        this.isHumanMovesHighlighting = isHumanMovesHighlighting;
-        this.isComputerMovesHighlighting = isComputerMovesHighlighting;
+        this.blackPlayerIsHuman = blackPlayerIsHuman;
+        this.whitePlayerIsHuman = whitePlayerIsHuman;
+        this.blackPlayerTeam = blackPlayerTeam;
+        this.whitePlayerTeam = whitePlayerTeam;
+        this.moveHighlightingManager = moveHighlightingManager;
+        this.textAreaContent = textAreaContent;
     }
 
     public HashMap<Coordinates, UnitData> getMapData() {
         return mapData;
     }
 
-    public Team getCurrentTeam() {
+    public Team getCurrentTeamMove() {
         return currentTeamMove;
     }
 
-    public boolean isPlayer1IsHuman() {
-        return player1IsHuman;
+    public boolean isBlackPlayerIsHuman() {
+        return blackPlayerIsHuman;
     }
 
-    public boolean isPlayer2IsHuman() {
-        return player2IsHuman;
+    public boolean isWhitePlayerIsHuman() {
+        return whitePlayerIsHuman;
     }
 
-    public Team getPlayer1Team() {
-        return player1Team;
+    public Team getBlackPlayerTeam() {
+        return blackPlayerTeam;
     }
 
-    public Team getPlayer2Team() {
-        return player2Team;
+    public Team getWhitePlayerTeam() {
+        return whitePlayerTeam;
     }
 
-    public boolean isUserMovesHighlighting() {
-        return isHumanMovesHighlighting;
+    public MoveHighlightingManager getMoveHighlightingManager() {
+        return moveHighlightingManager;
     }
 
-    public boolean isComputerMovesHighlighting() {
-        return isComputerMovesHighlighting;
+    public String getTextAreaContent() {
+        return textAreaContent;
     }
 }

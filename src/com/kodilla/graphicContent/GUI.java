@@ -40,6 +40,7 @@ public class GUI {
             "- Red highlighted squares marked mandatory kills.\n" +
             "\n------------------------------------------------------------------\n";
     private TextAreaManager textAreaManager;
+    private MoveHighlightingManager moveHighlightingManager;
     private Game game;
 
     public GUI(Stage primaryStage) {
@@ -73,7 +74,7 @@ public class GUI {
         textAreaManager = new TextAreaManager();
         Player initialBlackPlayer = new HumanPlayer(Team.BLACK);
         Player initialWhitePlayer = new HumanPlayer(Team.WHITE);
-        game = new Game(initialBlackPlayer, initialWhitePlayer, textAreaManager);
+        game = new Game(initialBlackPlayer, initialWhitePlayer, textAreaManager, moveHighlightingManager);
     }
 
     private Parent createGUI() {
@@ -109,12 +110,13 @@ public class GUI {
         Button saveGameButton = getSaveGameButton();
         Button loadGameButton = getLoadGameButton();
         Button userMoveHighlightingToggleButton = getUserMoveHighlightingToggleButton();
-        Button AIMoveHighlightingToggleButton = getAIMoveHighlightingToggleButton();
+        Button computerMoveHighlightingToggleButton = getAIMoveHighlightingToggleButton();
+        moveHighlightingManager = new MoveHighlightingManager(userMoveHighlightingToggleButton, computerMoveHighlightingToggleButton);
         Button displayInstructionsButton = getDisplayInstructionsButton();
         VBox playerControls = getPlayerControls();
 
         VBox userControls = new VBox(10, newGameButton, saveGameButton, loadGameButton,
-                userMoveHighlightingToggleButton, AIMoveHighlightingToggleButton, displayInstructionsButton, playerControls);
+                userMoveHighlightingToggleButton, computerMoveHighlightingToggleButton, displayInstructionsButton, playerControls);
 
         userControls.setPrefWidth(300);
         userControls.setMinWidth(300);
@@ -160,17 +162,15 @@ public class GUI {
     }
 
     private Button getUserMoveHighlightingToggleButton() {
-        String mechanism = "User moves highlighting";
-        Button userMoveHighlightingToggleButton = new Button("Disable: " + mechanism + "\n");
+        Button userMoveHighlightingToggleButton = new Button("Disable: user moves highlighting \n");
 
         userMoveHighlightingToggleButton.setOnAction(value -> {
-            game.toggleUserMoveHighlighting();
-            if (Game.userMoveHighlighting) {
-                userMoveHighlightingToggleButton.setText("Disable: " + mechanism + "\n");
-                textAreaManager.display(mechanism + " enabled.\n");
+            moveHighlightingManager.toggleUserMovesHighlighting();
+            game.refreshBoard();
+            if (moveHighlightingManager.isUserMoveHighlighting()) {
+                textAreaManager.display("User moves highlighting enabled.\n");
             } else {
-                userMoveHighlightingToggleButton.setText("Enable: " + mechanism + "\n");
-                textAreaManager.display(mechanism + " disabled.\n");
+                textAreaManager.display("User moves highlighting disabled.\n");
             }
         });
 
@@ -179,36 +179,20 @@ public class GUI {
     }
 
     private Button getAIMoveHighlightingToggleButton() {
-        String mechanism = "Computer moves highlighting";
-        Button AIMoveHighlightingToggleButton = new Button("Disable: " + mechanism + "\n");
+        Button AIMoveHighlightingToggleButton = new Button("Disable: computer moves highlighting \n");
 
         AIMoveHighlightingToggleButton.setOnAction(value -> {
-            Game.aiMoveHighlighting = !Game.aiMoveHighlighting;
-            if (Game.aiMoveHighlighting) {
-                AIMoveHighlightingToggleButton.setText("Disable: " + mechanism + "\n");
-                textAreaManager.display(mechanism + " enabled.\n");
+            moveHighlightingManager.toggleComputerMovesHighlighting();
+            game.refreshBoard();
+            if (moveHighlightingManager.isComputerMoveHighlighting()) {
+                textAreaManager.display("Computer moves highlighting enabled.\n");
             } else {
-                AIMoveHighlightingToggleButton.setText("Enable: " + mechanism + "\n");
-                textAreaManager.display(mechanism + " disabled.\n");
+                textAreaManager.display("Computer moves highlighting disabled.\n");
             }
         });
 
         AIMoveHighlightingToggleButton.setMaxWidth(Double.MAX_VALUE);
         return AIMoveHighlightingToggleButton;
-    }
-
-    public void setTextOnToggleHighlightingButton(boolean aiHighlighted, boolean humanHighlighted) {
-        if (aiHighlighted) {
-            AIMoveHighlightingToggleButton.setText("Disable: Computer moves highlighting \n");
-        } else {
-            AIMoveHighlightingToggleButton.setText("Enable: Computer moves highlighting \n");
-        }
-
-        if (humanHighlighted) {
-            userMoveHighlightingToggleButton.setText("Disable: User moves highlighting \n");
-        } else {
-            userMoveHighlightingToggleButton.setText("Enable: User moves highlighting \n");
-        }
     }
 
     private Button getDisplayInstructionsButton() {
@@ -235,14 +219,14 @@ public class GUI {
 
     private Button getSaveGameButton() {
         Button saveGameButton = new Button("Save game");
-        saveGameButton.setOnAction(value -> game.saveGame(game.getBlackPlayer(), game.getWhitePlayer(), game.getBoard()));
+        saveGameButton.setOnAction(value -> game.saveGame());
         saveGameButton.setMaxWidth(Double.MAX_VALUE);
         return saveGameButton;
     }
 
     private Button getLoadGameButton() {
         Button loadGameButton = new Button("Load game");
-        loadGameButton.setOnAction(value -> game.loadGame(game.getBlackPlayer(), game.getWhitePlayer(), game.getBoard()));
+        loadGameButton.setOnAction(value -> game.loadGame());
         loadGameButton.setMaxWidth(Double.MAX_VALUE);
         return loadGameButton;
     }

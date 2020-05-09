@@ -16,9 +16,11 @@ public class Board {
     private final Group whiteUnits = new Group();
     private ArrayList<Move> possibleMoves = new ArrayList<>();
     private final TextAreaManager textAreaManager;
+    private final MoveHighlightingManager moveHighlightingManager;
 
-    public Board(TextAreaManager textAreaManager) {
+    public Board(TextAreaManager textAreaManager, MoveHighlightingManager moveHighlightingManager) {
         this.textAreaManager = textAreaManager;
+        this.moveHighlightingManager = moveHighlightingManager;
         board = new Tile[Game.BOARD_SIZE][Game.BOARD_SIZE];
         setCurrentTeam(Team.BLACK);
 
@@ -125,7 +127,7 @@ public class Board {
     }
 
     public void highlightUsersAvailableMoves() {
-        if (Game.userMoveHighlighting) {
+        if (moveHighlightingManager.isUserMoveHighlighting()) {
             for (Move move : possibleMoves) {
                 highlightMove(move, PlayerType.USER);
             }
@@ -133,7 +135,7 @@ public class Board {
     }
 
     public void highlightAIMove(Move move) {
-        if (Game.aiMoveHighlighting) {
+        if (moveHighlightingManager.isComputerMoveHighlighting()) {
             highlightMove(move, PlayerType.AI);
         }
     }
