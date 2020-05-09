@@ -197,6 +197,19 @@ public class GUI {
         return AIMoveHighlightingToggleButton;
     }
 
+    public void setTextOnToggleHighlightingButton(boolean aiHighlighted, boolean humanHighlighted) {
+        if (aiHighlighted) {
+            AIMoveHighlightingToggleButton.setText("Disable: Computer moves highlighting \n");
+        } else {
+            AIMoveHighlightingToggleButton.setText("Enable: Computer moves highlighting \n");
+        }
+
+        if (humanHighlighted) {
+            userMoveHighlightingToggleButton.setText("Disable: User moves highlighting \n");
+        } else {
+            userMoveHighlightingToggleButton.setText("Enable: User moves highlighting \n");
+        }
+    }
 
     private Button getDisplayInstructionsButton() {
         Button displayInstructionsButton = new Button("Game description");
@@ -222,13 +235,14 @@ public class GUI {
 
     private Button getSaveGameButton() {
         Button saveGameButton = new Button("Save game");
-        //saveGameButton.setOnAction(value -> game.saveGame());
+        saveGameButton.setOnAction(value -> game.saveGame(game.getBlackPlayer(), game.getWhitePlayer(), game.getBoard()));
         saveGameButton.setMaxWidth(Double.MAX_VALUE);
         return saveGameButton;
     }
 
     private Button getLoadGameButton() {
         Button loadGameButton = new Button("Load game");
+        loadGameButton.setOnAction(value -> game.loadGame(game.getBlackPlayer(), game.getWhitePlayer(), game.getBoard()));
         loadGameButton.setMaxWidth(Double.MAX_VALUE);
         return loadGameButton;
     }

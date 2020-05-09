@@ -11,7 +11,6 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 
 import java.io.*;
 import java.util.HashMap;
@@ -259,6 +258,18 @@ public class Game {
         return invalidMoveError;
     }
 
+    public Player getBlackPlayer() {
+        return blackPlayer;
+    }
+
+    public Player getWhitePlayer() {
+        return whitePlayer;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
     public void saveGame(Player player1, Player player2, Board board) {
         HashMap<Coordinates, UnitData> unitHashMap = new HashMap<>();
         for (Node node : components.getChildren()) {
@@ -352,29 +363,12 @@ public class Game {
 
             userMoveHighlighting = loadData.isUserMovesHighlighting();
             aiMoveHighlighting = loadData.isComputerMovesHighlighting();
-            toggleUserMoveHighlightingTextButton(userMoveHighlighting);
-            toggleComputerMoveHighlightingTextButton(aiMoveHighlighting);
+            GUI.setTextOnToggleHighlightingButton(aiMoveHighlighting, userMoveHighlighting)
 
         } catch (IOException e) {
             textAreaManager.display("\nSave file not found!");
         } catch (ClassNotFoundException e) {
             textAreaManager.display("\nSave file crashed!");
-        }
-    }
-
-    private void toggleUserMoveHighlightingTextButton(boolean isHighlighting) {
-        if (isHighlighting) {
-            GUI.userMoveHighlightingToggleButton.setText("Disable: User moves highlighting \n");
-        } else {
-            GUI.userMoveHighlightingToggleButton.setText("Enable: User moves highlighting \n");
-        }
-    }
-
-    private void toggleComputerMoveHighlightingTextButton(boolean isHighlighting) {
-        if (isHighlighting) {
-            GUI.AIMoveHighlightingToggleButton.setText("Disable: Computer moves highlighting \n");
-        } else {
-            GUI.AIMoveHighlightingToggleButton.setText("Enable: Computer moves highlighting \n");
         }
     }
 }

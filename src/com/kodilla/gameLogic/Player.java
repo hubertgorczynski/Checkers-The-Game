@@ -16,6 +16,7 @@ public abstract class Player {
         this.playerType = playerType;
     }
 
+
     public boolean isPlayerHuman() {
         return playerType == PlayerType.USER;
     }
@@ -36,7 +37,7 @@ public abstract class Player {
         isPlayersTurn = !isPlayersTurn;
     }
 
-    public void resetPlayer() { //blacks start first
+    public void resetPlayer() {
         isPlayersTurn = playerTeam == Team.BLACK;
     }
 }
