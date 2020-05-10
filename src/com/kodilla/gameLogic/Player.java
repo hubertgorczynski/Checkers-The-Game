@@ -16,7 +16,6 @@ public abstract class Player {
         this.playerType = playerType;
     }
 
-
     public boolean isPlayerHuman() {
         return playerType == PlayerType.USER;
     }

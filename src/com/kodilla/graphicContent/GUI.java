@@ -45,7 +45,6 @@ public class GUI {
 
     public GUI(Stage primaryStage) {
         configureApplicationWindow(primaryStage);
-        initialiseApplicationBackend();
         Scene GUI = new Scene(createGUI());
         primaryStage.setScene(GUI);
 
@@ -86,7 +85,10 @@ public class GUI {
         Background woodenTexture = new Background(backgroundImage);
 
         VBox controls = buildControls();
+        initialiseApplicationBackend();
+
         Pane gameBoard = getGameBoard();
+
         TextArea output = textAreaManager.setUpGameOutputFeed();
 
         HBox layout = new HBox(10, controls, gameBoard, output);
