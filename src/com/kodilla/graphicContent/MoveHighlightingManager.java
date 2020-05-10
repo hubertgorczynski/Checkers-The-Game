@@ -41,4 +41,12 @@ public class MoveHighlightingManager {
     public boolean isComputerMoveHighlighting() {
         return computerMoveHighlighting;
     }
+
+    public void setUserMoveHighlighting(boolean userMoveHighlighting) {
+        this.userMoveHighlighting = userMoveHighlighting;
+    }
+
+    public void setComputerMoveHighlighting(boolean computerMoveHighlighting) {
+        this.computerMoveHighlighting = computerMoveHighlighting;
+    }
 }

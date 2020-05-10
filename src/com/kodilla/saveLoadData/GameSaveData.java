@@ -2,7 +2,6 @@ package com.kodilla.saveLoadData;
 
 import com.kodilla.gameLogic.Coordinates;
 import com.kodilla.gameLogic.Team;
-import com.kodilla.graphicContent.MoveHighlightingManager;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -14,19 +13,21 @@ public class GameSaveData implements Serializable {
     boolean whitePlayerIsHuman;
     Team blackPlayerTeam;
     Team whitePlayerTeam;
-    private final MoveHighlightingManager moveHighlightingManager;
+    private final boolean userMoveHighlighting;
+    private final boolean computerMoveHighlighting;
     private final String textAreaContent;
 
     public GameSaveData(HashMap<Coordinates, UnitData> mapData, Team currentTeamMove,
                         boolean blackPlayerIsHuman, boolean whitePlayerIsHuman, Team blackPlayerTeam, Team whitePlayerTeam,
-                        MoveHighlightingManager moveHighlightingManager, String textAreaContent) {
+                        boolean userMoveHighlighting, boolean computerMoveHighlighting, String textAreaContent) {
         this.mapData = mapData;
         this.currentTeamMove = currentTeamMove;
         this.blackPlayerIsHuman = blackPlayerIsHuman;
         this.whitePlayerIsHuman = whitePlayerIsHuman;
         this.blackPlayerTeam = blackPlayerTeam;
         this.whitePlayerTeam = whitePlayerTeam;
-        this.moveHighlightingManager = moveHighlightingManager;
+        this.userMoveHighlighting = userMoveHighlighting;
+        this.computerMoveHighlighting = computerMoveHighlighting;
         this.textAreaContent = textAreaContent;
     }
 
@@ -54,8 +55,12 @@ public class GameSaveData implements Serializable {
         return whitePlayerTeam;
     }
 
-    public MoveHighlightingManager getMoveHighlightingManager() {
-        return moveHighlightingManager;
+    public boolean isUserMoveHighlighting() {
+        return userMoveHighlighting;
+    }
+
+    public boolean isComputerMoveHighlighting() {
+        return computerMoveHighlighting;
     }
 
     public String getTextAreaContent() {

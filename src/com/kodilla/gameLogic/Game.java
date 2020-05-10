@@ -29,7 +29,7 @@ public class Game {
     private Board board;
     private final Group components;
     private final TextAreaManager textAreaManager;
-    private MoveHighlightingManager moveHighlightingManager;
+    private final MoveHighlightingManager moveHighlightingManager;
 
     public Game(Player blackPlayer, Player whitePlayer, TextAreaManager textAreaManager, MoveHighlightingManager moveHighlightingManager) {
         this.textAreaManager = textAreaManager;
@@ -279,7 +279,8 @@ public class Game {
                 whitePlayer.isPlayerHuman(),
                 blackPlayer.getPlayerTeam(),
                 whitePlayer.getPlayerTeam(),
-                moveHighlightingManager,
+                moveHighlightingManager.isUserMoveHighlighting(),
+                moveHighlightingManager.isComputerMoveHighlighting(),
                 textAreaManager.getTextAreaContent()
         );
         try {
@@ -345,7 +346,8 @@ public class Game {
             blackPlayer.setPlayerTeam(loadData.getBlackPlayerTeam());
             whitePlayer.setPlayerTeam(loadData.getWhitePlayerTeam());
 
-            moveHighlightingManager = loadData.getMoveHighlightingManager();
+            moveHighlightingManager.setUserMoveHighlighting(loadData.isUserMoveHighlighting());
+            moveHighlightingManager.setComputerMoveHighlighting(loadData.isComputerMoveHighlighting());
 
             textAreaManager.setTextAreaContent(loadData.getTextAreaContent());
             textAreaManager.display("\nGame loaded correctly!");
