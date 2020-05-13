@@ -287,9 +287,9 @@ public class Game {
             ObjectOutputStream saveData = new ObjectOutputStream(new FileOutputStream("save.txt"));
             saveData.writeObject(gameSaveData);
             saveData.close();
-            textAreaManager.display("\nGame saved correctly!");
+            textAreaManager.display("\nGame saved correctly!\n");
         } catch (IOException ex) {
-            textAreaManager.display("\nCannot create save file!");
+            textAreaManager.display("\nCannot create save file!\n");
         }
     }
 
@@ -345,16 +345,18 @@ public class Game {
 
             blackPlayer.setPlayerTeam(loadData.getBlackPlayerTeam());
             whitePlayer.setPlayerTeam(loadData.getWhitePlayerTeam());
+            blackPlayer.resetPlayer();
+            whitePlayer.resetPlayer();
 
             moveHighlightingManager.setUserMoveHighlighting(loadData.isUserMoveHighlighting());
             moveHighlightingManager.setComputerMoveHighlighting(loadData.isComputerMoveHighlighting());
 
             textAreaManager.setTextAreaContent(loadData.getTextAreaContent());
-            textAreaManager.display("\nGame loaded correctly!");
+            textAreaManager.display("\nGame loaded correctly!\n");
         } catch (IOException e) {
-            textAreaManager.display("\nSave file not found!");
+            textAreaManager.display("\nSave file not found!\n");
         } catch (ClassNotFoundException e) {
-            textAreaManager.display("\nSave file crashed!");
+            textAreaManager.display("\nSave file crashed!\n");
         }
     }
 }

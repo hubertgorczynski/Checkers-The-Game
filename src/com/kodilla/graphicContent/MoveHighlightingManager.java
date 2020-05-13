@@ -44,9 +44,19 @@ public class MoveHighlightingManager {
 
     public void setUserMoveHighlighting(boolean userMoveHighlighting) {
         this.userMoveHighlighting = userMoveHighlighting;
+        if (userMoveHighlighting) {
+            userMoveHighlightingToggleButton.setText("Disable: User moves highlighting \n");
+        } else {
+            userMoveHighlightingToggleButton.setText("Enable: User moves highlighting \n");
+        }
     }
 
     public void setComputerMoveHighlighting(boolean computerMoveHighlighting) {
         this.computerMoveHighlighting = computerMoveHighlighting;
+        if (computerMoveHighlighting) {
+            computerMoveHighlightingToggleButton.setText("Disable: Computer moves highlighting \n");
+        } else {
+            computerMoveHighlightingToggleButton.setText("Enable: Computer moves highlighting \n");
+        }
     }
 }
