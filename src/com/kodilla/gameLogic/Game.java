@@ -14,6 +14,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -256,7 +257,7 @@ public class Game {
     }
 
     public void saveGame() {
-        List<Node> allUnits = board.getBlackUnits().getChildren();
+        List<Node> allUnits = new ArrayList<>(board.getBlackUnits().getChildren());
         allUnits.addAll(board.getWhiteUnits().getChildren());
 
         HashMap<Coordinates, UnitData> unitHashMap = new HashMap<>();
