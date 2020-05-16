@@ -24,6 +24,10 @@ public abstract class Player {
         return isPlayersTurn;
     }
 
+    public void setPlayersTurn(boolean playersTurn) {
+        isPlayersTurn = playersTurn;
+    }
+
     public Team getPlayerTeam() {
         return playerTeam;
     }

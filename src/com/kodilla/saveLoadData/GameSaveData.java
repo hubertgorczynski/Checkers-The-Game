@@ -11,19 +11,24 @@ public class GameSaveData implements Serializable {
     private final Team currentTeamMove;
     boolean blackPlayerIsHuman;
     boolean whitePlayerIsHuman;
+    boolean blackPlayersTurn;
+    boolean whitePlayersTurn;
     Team blackPlayerTeam;
     Team whitePlayerTeam;
     private final boolean userMoveHighlighting;
     private final boolean computerMoveHighlighting;
     private final String textAreaContent;
 
-    public GameSaveData(HashMap<Coordinates, UnitData> mapData, Team currentTeamMove,
-                        boolean blackPlayerIsHuman, boolean whitePlayerIsHuman, Team blackPlayerTeam, Team whitePlayerTeam,
-                        boolean userMoveHighlighting, boolean computerMoveHighlighting, String textAreaContent) {
+    public GameSaveData(HashMap<Coordinates, UnitData> mapData, Team currentTeamMove, boolean blackPlayerIsHuman,
+                        boolean whitePlayerIsHuman, boolean blackPlayersTurn, boolean whitePlayersTurn,
+                        Team blackPlayerTeam, Team whitePlayerTeam, boolean userMoveHighlighting,
+                        boolean computerMoveHighlighting, String textAreaContent) {
         this.mapData = mapData;
         this.currentTeamMove = currentTeamMove;
         this.blackPlayerIsHuman = blackPlayerIsHuman;
         this.whitePlayerIsHuman = whitePlayerIsHuman;
+        this.blackPlayersTurn = blackPlayersTurn;
+        this.whitePlayersTurn = whitePlayersTurn;
         this.blackPlayerTeam = blackPlayerTeam;
         this.whitePlayerTeam = whitePlayerTeam;
         this.userMoveHighlighting = userMoveHighlighting;
@@ -45,6 +50,14 @@ public class GameSaveData implements Serializable {
 
     public boolean isWhitePlayerIsHuman() {
         return whitePlayerIsHuman;
+    }
+
+    public boolean isBlackPlayersTurn() {
+        return blackPlayersTurn;
+    }
+
+    public boolean isWhitePlayersTurn() {
+        return whitePlayersTurn;
     }
 
     public Team getBlackPlayerTeam() {

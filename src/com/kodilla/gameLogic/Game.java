@@ -278,6 +278,8 @@ public class Game {
                 board.getCurrentTeam(),
                 blackPlayer.isPlayerHuman(),
                 whitePlayer.isPlayerHuman(),
+                blackPlayer.isPlayersTurn(),
+                whitePlayer.isPlayersTurn(),
                 blackPlayer.getPlayerTeam(),
                 whitePlayer.getPlayerTeam(),
                 moveHighlightingManager.isUserMoveHighlighting(),
@@ -346,8 +348,10 @@ public class Game {
 
             blackPlayer.setPlayerTeam(loadData.getBlackPlayerTeam());
             whitePlayer.setPlayerTeam(loadData.getWhitePlayerTeam());
-            blackPlayer.resetPlayer();
-            whitePlayer.resetPlayer();
+
+            blackPlayer.setPlayersTurn(loadData.isBlackPlayersTurn());
+            whitePlayer.setPlayersTurn(loadData.isWhitePlayersTurn());
+            nextPlayersTurn();
 
             moveHighlightingManager.setUserMoveHighlighting(loadData.isUserMoveHighlighting());
             moveHighlightingManager.setComputerMoveHighlighting(loadData.isComputerMoveHighlighting());
