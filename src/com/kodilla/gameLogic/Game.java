@@ -351,7 +351,7 @@ public class Game {
 
             blackPlayer.setPlayersTurn(loadData.isBlackPlayersTurn());
             whitePlayer.setPlayersTurn(loadData.isWhitePlayersTurn());
-            nextPlayersTurn();
+            addMouseControlToAllUnits();
 
             moveHighlightingManager.setUserMoveHighlighting(loadData.isUserMoveHighlighting());
             moveHighlightingManager.setComputerMoveHighlighting(loadData.isComputerMoveHighlighting());
