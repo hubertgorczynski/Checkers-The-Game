@@ -2,6 +2,8 @@
 
 ## Description: It's checkers game made with Java FX technology.
 
+![](https://user-images.githubusercontent.com/60893005/95097768-270d3880-072e-11eb-8e96-c0605d532e7e.png)
+
 ### Features:
 - Possibility of choosing mode:
   - Player vs Player.
